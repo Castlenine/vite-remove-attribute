@@ -1,13 +1,44 @@
 {
-  "include": ["src/**/*.ts"],
-  "compilerOptions": {
-    "baseUrl": ".",
-    "module": "ES6",
-    "target": "ES6",
-     "lib": ["ES6","DOM","DOM.Iterable"],  
-    "declaration": true,
-    "declarationDir": "dist",
-    "moduleResolution": "Node",
-    "esModuleInterop": true
-  },
+	"compilerOptions": {
+		"strict": true,
+		"moduleResolution": "Node",
+		"module": "ESNext",
+		"lib": [
+			"DOM",
+			"DOM.Iterable",
+			"ESNext"
+		],
+		"target": "ES2017", // Opting for ES2017 is a prudent decision
+		"allowJs": true, // Allow JavaScript files to be compiled
+		"checkJs": true, // Check JavaScript files
+		"declaration": true, // Generates corresponding .d.ts files
+		"declarationMap": true, // Generates a source map for each corresponding declaration file
+		"esModuleInterop": true, // Helps mend a few of the fences between CommonJS and ES Modules.
+		"forceConsistentCasingInFileNames": true, // Ensures that the casing of file names is consistent
+		"isolatedModules": true, // Prevents a few TS features which are unsafe when treating modules as isolated files.
+		"moduleDetection": "force", // Forces TypeScript to consider all files as modules. This helps to avoid 'cannot redeclare block-scoped variable' errors.
+		"noImplicitAny": true, // Raise error on expressions and declarations with an implied 'any' type
+		"noImplicitThis": true, // Raise error on 'this' expressions with an implied 'any' type
+		"noUnusedLocals": true, // Report errors on unused locals
+		"noUnusedParameters": true, // Report errors on unused parameters
+		"resolveJsonModule": true, // Allows importing modules with a .json extension
+		"skipLibCheck": true, // Skips checking the types of .d.ts files. This is important for performance, because otherwise all node_modules will be checked
+		"sourceMap": true, // enable source maps by default
+		"strictFunctionTypes": true, // Enable strict checking of function types
+		"strictNullChecks": true, // Enable strict null checks
+		"strictPropertyInitialization": true, // Enable strict checking of property initialization in classes
+		"verbatimModuleSyntax": true, // Forces you to use import type and export type
+		"outDir": "./dist", // Redirect output structure to the directory
+	},
+	"include": [
+		"src/**/*.d.ts",
+		"src/**/*.ts",
+		"src/**/*.js",
+	],
+	"exclude": [
+		"*.backup",
+		"*.cjs",
+		"dist",
+		"node_modules",
+	]
 }

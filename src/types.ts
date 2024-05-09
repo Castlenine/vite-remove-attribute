@@ -1,11 +1,8 @@
 interface Options {
-    extensions: string[],
-    attributes: string[],
-    ignoreFolders?: string[]
-    ignoreFiles?: string[]
+	extensions: string[];
+	attributes: string[];
+	ignoreFolders?: string[];
+	ignoreFiles?: string[];
 }
 
-
-export type {
-    Options
-}
+export type { Options };

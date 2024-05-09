@@ -1,0 +1,14 @@
+.DS_Store
+dist
+node_modules
+
+# Specific file(s) to ignore
+*.md
+package.json
+tsconfig.json
+
+# Ignore local backup
+*.backup.*
+
+# Ignore files for NPM
+package-lock.json

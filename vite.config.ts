@@ -1,12 +1,20 @@
-import { resolve } from 'path'
-import { defineConfig } from 'vite'
+import { defineConfig } from 'vite';
+
+import typescript from '@rollup/plugin-typescript';
 
 export default defineConfig({
-    build: {
-        lib: {
-            entry: resolve(__dirname, 'src/remove-attributes.ts'),
-            name: 'remove-attributes',
-            fileName: 'remove-attributes',
-        },
-    },
-})
+	build: {
+		lib: {
+			entry: './src/index.ts',
+			name: 'RemoveAttributesPlugin',
+			fileName: 'index',
+		},
+		rollupOptions: {
+			plugins: [
+				typescript({
+					tsconfig: './tsconfig.json',
+				}),
+			],
+		},
+	},
+});
