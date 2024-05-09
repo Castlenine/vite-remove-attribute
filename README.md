@@ -9,11 +9,17 @@ Vite plugin that allows the removal of specified attributes and supports a varie
 
 ## Table of Contents
 
+- [Disclaimer](#disclaimer)
 - [Features](#features)
 - [Installation](#installation)
 - [Usage](#usage)
   - [Prerequisites](#prerequisites)
+  - [Notes](#notes)
   - [Examples](#examples)
+
+## Disclaimer
+
+**Only tested with Svelte, SvelteKit and Vue.js projects**. Please open an issue if you encounter any problems with other frameworks.
 
 ## Features
 
@@ -34,12 +40,15 @@ npm i --save-dev @castlenine/vite-remove-attribute
 
 ### Prerequisites
 
-To use this plugin, you need to have a Vite project set up. Import and use the plugin in your `vite.config.js` or
-`vite.config.ts` file.
+To use this plugin, you must have a Vite config file set up in your project. If you don't have one, create a `vite.config.js` or `vite.config.ts` file in the root of your project.
+
+### Notes
+
+For some frameworks, like Svelte & SvelteKit, this plugin should be placed first (before the framework's plugin) in the `plugins` array and for others, like Vue.js, it should be placed after the framework's plugin.
 
 ## Examples
 
-### Example 1: Removing 'data-testid' attributes from `.svelte` files
+### SvelteKit example 1: Removing 'data-testid' attributes from `.svelte` files
 
 This configuration will remove `data-testid` attributes from all `.svelte` files in the production build.
 
@@ -53,19 +62,19 @@ const IS_PRODUCTION = process.env.NODE_ENV == 'production';
 
 export default defineConfig({
     plugins: [
-        sveltekit(),
-
         IS_PRODUCTION
             ? removeAttribute({
                     extensions: ['svelte'],
                     attributes: ['data-testid'],
                 })
             : null,
+
+        sveltekit(), // SvelteKit plugin should be placed after removeAttribute
     ],
 });
 ```
 
-### Example 2: Ignoring specific folders and files
+### SvelteKit example 2: Ignoring specific folders and files
 
 This configuration will remove `data-testid` and `data-id` attributes from all `.svelte`, `.ts`, and `.js` files, with the exception of those located in the `src/tests` and `src/utilities` folders, as well as the `Header.svelte`, `src/components/Modal.svelte`, and `src/layouts/LayoutAuth.svelte` files in all builds.
 
@@ -77,15 +86,54 @@ import removeAttribute from '@castlenine/vite-remove-attribute';
 
 export default defineConfig({
     plugins: [
-        sveltekit(),
         removeAttribute({
             extensions: ['svelte', 'ts', 'js'],
             attributes: ['data-testid', 'data-id'],
             ignoreFolders: ['src/tests', 'src/utilities'],
             ignoreFiles: ['Header.svelte', 'src/components/Modal.svelte', 'src/layouts/LayoutAuth.svelte'],
         }),
+
+        sveltekit(), // SvelteKit plugin should be placed after removeAttribute
     ],
 });
+```
+
+### Vue.js example 1: Removing 'data-testid' attributes from '.vue' files
+
+This configuration will remove 'data-testid' attributes from all '.vue' files in the production build.
+
+```typescript
+const IS_PRODUCTION = process.env.NODE_ENV == 'production';
+
+export default defineConfig({
+    plugins: [
+        vue(), // Vue plugin should be placed before removeAttribute
+        IS_PRODUCTION
+            ? removeAttribute({
+                    extensions: ['vue'],
+                    attributes: ['data-testid'],
+                })
+            : null,
+    ]
+})
+```
+
+#### Vue.js example 2: Ignoring specific folders and files
+
+This configuration will remove `data-testid` and `data-id` attributes from all `.vue`, `.ts`, and `.js` files, with the exception of those located in the `src/tests` and `src/utilities` folders, as well as the `Header.vue`, `src/components/Modal.vue`, and `src/layouts/LayoutAuth.vue` files in all builds.
+
+```typescript
+export default defineConfig({
+    plugins: [
+        vue(), // Vue plugin should be placed before removeAttribute
+        removeAttr({
+            extensions: [ 'vue', "ts", "js" ],
+            attributes: [ 'data-testid', "data-id" ],
+            ignoreFolders: [ 'src/tests', "src/utilities" ],
+            ignoreFiles: [ 'Header.vue', 'src/components/Modal.vue', "src/layouts/LayoutAuth.vue" ]
+        })
+    ]
+})
 ```
 
 <br />
